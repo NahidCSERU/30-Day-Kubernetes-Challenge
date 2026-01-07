@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-name: first-pod
-labels:
-app: demo
+  name: first-pod
+  labels:
+    app: demo
 spec:
-containers:
-- name: nginx-container
-image: nginx:latest
-ports:
-- containerPort: 80 
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
