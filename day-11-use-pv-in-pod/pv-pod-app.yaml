@@ -1,0 +1,52 @@
+# -------------------------------
+# PersistentVolume (Cluster-scoped)
+# -------------------------------
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: demo-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /data/demo-pv
+
+---
+# --------------------------------
+# PersistentVolumeClaim (Namespace)
+# --------------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: demo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# -------------------------------
+# Pod using PVC
+# -------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-demo-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: demo-storage
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: demo-storage
+      persistentVolumeClaim:
+        claimName: demo-pvc
