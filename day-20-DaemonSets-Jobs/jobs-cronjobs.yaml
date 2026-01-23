@@ -1,0 +1,63 @@
+# -------------------- DaemonSet --------------------
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-logger
+spec:
+  selector:
+    matchLabels:
+      app: node-logger
+  template:
+    metadata:
+      labels:
+        app: node-logger
+    spec:
+      containers:
+      - name: logger
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            echo "Node: $(hostname)";
+            sleep 15;
+          done
+---
+# -------------------- Job --------------------
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-job
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+      - name: job
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - echo "Hello from Job"
+      restartPolicy: Never
+---
+# -------------------- CronJob --------------------
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-cronjob
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron
+            image: busybox
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Hello from CronJob"
+          restartPolicy: OnFailure
