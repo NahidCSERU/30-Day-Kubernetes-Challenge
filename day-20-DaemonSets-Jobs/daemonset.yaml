@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-logger
+  labels:
+    app: node-logger
+spec:
+  selector:
+    matchLabels:
+      app: node-logger
+  template:
+    metadata:
+      labels:
+        app: node-logger
+    spec:
+      containers:
+      - name: logger
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            echo "Logging from node: $(hostname)";
+            sleep 10;
+          done
