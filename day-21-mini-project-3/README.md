@@ -1,15 +1,13 @@
-# Microservice Application Architecture (Kubernetes + Ingress)
+# Day 21 — Mini Project 3: Kubernetes Microservice Application
 
-This repository demonstrates a conceptual microservice-based application architecture
-designed for Kubernetes environments. The focus of this project is to explain how
-different components (Ingress, Frontend, Backend, and Database) are connected and how
-traffic flows through the system.
+This project demonstrates a multi-service microservice architecture
+deployed on Kubernetes with Ingress-based routing.
 
 ---
 
 ## 📌 Architecture Overview
 
-![Microservice Architecture](diagrams/microservice-ingress.png)
+![Microservice Architecture](project3.png)
 
 This architecture represents a web application deployed inside a Kubernetes cluster,
 where an Ingress Controller is used to route external traffic to internal services.
@@ -105,12 +103,22 @@ where an Ingress Controller is used to route external traffic to internal servic
 
 ---
 
-## 🚀 Future Enhancements (Optional)
-- Add CI/CD pipeline architecture
-- Map this design to AWS (EKS, ALB, RDS)
-- Add HPA and monitoring components
-- Convert architecture into a working demo project
+## 🚀 Deployment
 
+```
+kubectl apply -f frontend/
+kubectl apply -f backend/
+kubectl apply -f database/
+kubectl apply -f ingress/
+```
+---
+
+## 🔍 Verify
+```
+kubectl get pods
+kubectl get svc
+kubectl get ingress
+```
 ---
 
 ## 👤 Author
